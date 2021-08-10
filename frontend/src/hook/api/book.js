@@ -7,7 +7,7 @@ export async function getBook(bookid) {
   return new Promise((resolve, reject) => {
     axios({
       method: 'GET',
-      url: `http://localhost:8001/${bookid}`,
+      url: `/book/${bookid}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -33,14 +33,14 @@ export async function newBook(title, author, genres, description, characters, pr
   return new Promise((resolve, reject) => {
     axios
       .post(
-        `http://localhost:8001/admin`,
+        `/book/admin`,
         { title, author, genres, description, characters, price },
         { withCredentials: true }
       )
       .then(async (res) => {
         if (image.raw[0]) {
           await axios
-            .post(`http://localhost:8001/admin/${res.data.id}/image`, formData, {
+            .post(`/book/admin/${res.data.id}/image`, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },
@@ -70,7 +70,7 @@ export async function updateBook(bookid, title, author, genres, description, cha
   return new Promise((resolve, reject) => {
     axios
       .patch(
-        `http://localhost:8001/admin/${bookid}`,
+        `/book/admin/${bookid}`,
         { title, author, genres, description, characters, price },
         { withCredentials: true }
       )
@@ -91,7 +91,7 @@ export async function deleteBook(bookid) {
   await setTimeout(() => {}, 2000);
   return new Promise((resolve, reject) => {
     axios
-      .delete(`http://localhost:8001/admin/${bookid}`, { withCredentials: true })
+      .delete(`/book/admin/${bookid}`, { withCredentials: true })
       .then(async () => {
         resolve();
       })
@@ -113,7 +113,7 @@ export async function uploadBookImage(file, bookid) {
 
   return new Promise((resolve, reject) => {
     axios
-      .post(`http://localhost:8001/admin/${bookid}/image`, formData, {
+      .post(`/book/admin/${bookid}/image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
