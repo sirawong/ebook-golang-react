@@ -1,5 +1,5 @@
 # Base image
-FROM golang:1.16-alpine AS build
+FROM golang:1.16-buster AS build
 
 # # Build stage
 # FROM base as build
