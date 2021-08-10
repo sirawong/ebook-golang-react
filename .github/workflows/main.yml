@@ -6,7 +6,7 @@ on:
       - master
     types:
       - "closed"
-      
+   
 jobs:
   build_docker_images:
     name: Build docker images
