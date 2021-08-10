@@ -21,10 +21,6 @@ FROM golang:1.16-buster AS build
 # # Base image for building the go project
 # FROM golang:1.14-alpine AS build
 
-# Updates the repository and installs git
-RUN apk update && apk upgrade && \
-    apk add --no-cache git
-
 # Switches to /tmp/app as the working directory, similar to 'cd'
 WORKDIR /tmp/app
 
