@@ -8,6 +8,7 @@ require (
 	github.com/gin-contrib/cors v1.3.1 // indirect
 	github.com/gin-gonic/gin v1.7.2
 	github.com/google/uuid v1.3.0 // indirect
+	github.com/rs/cors v1.8.0 // indirect
 	github.com/spf13/viper v1.8.1
 	go.mongodb.org/mongo-driver v1.5.4
 	go.uber.org/zap v1.18.1

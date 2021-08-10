@@ -35,7 +35,7 @@ export default function useBookSearch(
     let cancel;
     axios({
       method: 'GET',
-      url: 'localhost:8001',
+      url: 'http://localhost:8001',
       params: {
         page: pageNumber,
         query,
@@ -80,7 +80,7 @@ export function UseBook(bookid) {
     let cancel;
     axios({
       method: 'GET',
-      url: `localhost:8001/${bookid}`,
+      url: `http://localhost:8001/${bookid}`,
       withCredentials: true,
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })

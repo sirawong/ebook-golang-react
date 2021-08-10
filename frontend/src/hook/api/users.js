@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: 'localhost:8000/',
+  baseURL: 'http://localhost:8000/',
 });
 
 export function signup(fname, lname, email, password) {
@@ -123,7 +123,7 @@ export async function uploadImage(files) {
   await setTimeout(() => {}, 2000);
   return new Promise((resolve, reject) => {
     axios
-      .post('localhost:8000/me/image', formData, {
+      .post('http://localhost:8000/me/image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
