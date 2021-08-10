@@ -34,7 +34,7 @@ COPY . .
 
 # Builds the current project to a binary file called api
 # The location of the binary file is /tmp/app/out/api
-RUN GOOS=linux go build -o ./out/cart .
+RUN go build -o ./out/cart .
 
 #########################################################
 
