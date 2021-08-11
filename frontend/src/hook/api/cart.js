@@ -7,7 +7,7 @@ export async function getCart() {
   return new Promise((resolve, reject) => {
     axios({
       method: 'GET',
-      url: `/cart/order`,
+      url: `http://localhost:8002/order`,
       withCredentials: true,
     })
       .then((res) => {
@@ -28,7 +28,7 @@ export async function setOrder({ cart, total, value }) {
   return new Promise((resolve, reject) => {
     axios
       .post(
-        `/cart/order`,
+        `http://localhost:8002/order`,
         { items: cart, totalItem: total, valueTotal: value },
         { withCredentials: true }
       )
