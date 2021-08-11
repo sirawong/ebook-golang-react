@@ -1,58 +1,25 @@
-# Base image
 FROM golang:1.16-buster AS build
 
-# # Build stage
-# FROM base as build
-# WORKDIR /app
-# COPY go.mod ./
-# COPY go.sum ./
-# RUN go mod download
-# COPY . .
-# RUN go build -o /cart
+WORKDIR /app
 
-# # Run stage
-# FROM base
-# WORKDIR /
-# COPY --from=build /cart /cart
-# EXPOSE 8000
-# CMD [ "/cart" ]
-
-
-# # Base image for building the go project
-# FROM golang:1.14-alpine AS build
-
-# Switches to /tmp/app as the working directory, similar to 'cd'
-WORKDIR /tmp/app
-
-## If you have a go.mod and go.sum file in your project, uncomment lines 13, 14, 15
-
-COPY go.mod .
-COPY go.sum .
+COPY go.mod ./
+COPY go.sum ./
 RUN go mod download
 
-COPY . .
+COPY . ./
 
-# Builds the current project to a binary file called api
-# The location of the binary file is /tmp/app/out/api
-RUN go build -o ./out/book .
+RUN go build -o app
 
-#########################################################
+##
+## Deploy
+##
 
-# The project has been successfully built and we will use a
-# lightweight alpine image to run the server 
-FROM alpine:latest
+FROM gcr.io/distroless/base-debian10
 
-# Adds CA Certificates to the image
-RUN apk add ca-certificates
+WORKDIR /
 
-# Copies the binary file from the BUILD container to /app folder
-COPY --from=build /tmp/app/out/book /app/book
+COPY --from=build /app /app
 
-# Switches working directory to /app
-WORKDIR "/app"
-
-# Exposes the 5000 port from the container
 EXPOSE 8000
 
-# Runs the binary once the container starts
-CMD ["./book"]
+ENTRYPOINT ["/app"]
