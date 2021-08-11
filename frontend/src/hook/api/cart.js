@@ -23,7 +23,6 @@ export async function setOrder({ cart, total, value }) {
   if (typeof Cookies.get('ac') === 'undefined') {
     await fatchToken();
   }
-  console.log(cart, total, value);
   await setTimeout(() => {}, 2000);
   return new Promise((resolve, reject) => {
     axios

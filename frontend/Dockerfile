@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install -g npm@latest
 RUN npm install
-COPY . .
+COPY . ./
 RUN npm run build
 
 FROM nginx:alpine

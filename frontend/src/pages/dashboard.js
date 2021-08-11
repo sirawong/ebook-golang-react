@@ -7,8 +7,6 @@ import NewBookPop from '../components/sidebar/NewBook';
 import EditBook from '../components/sidebar/Edit';
 import DeleteBook from '../components/popup/Delete';
 
-import Noti from '../components/popup/Noti';
-
 export default function Dashboard() {
   const [query, setQuery] = useState();
   const [pageNumber, setPageNumber] = useState(1);
@@ -118,7 +116,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <Noti />
       <div className="flex justify-center py-5 pb-10">
         {bookMore > 1 && (
           <button

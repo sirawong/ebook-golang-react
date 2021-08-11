@@ -3,7 +3,11 @@ import Cookies from 'js-cookie';
 
 const instance = axios.create({
   withCredentials: true,
+<<<<<<< HEAD
   baseURL: 'http://localhost:8000/',
+=======
+  baseURL: 'http://localhost:8000',
+>>>>>>> deploy
 });
 
 export function signup(fname, lname, email, password) {
