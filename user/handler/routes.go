@@ -11,5 +11,4 @@ func (r routes) Router(handler userHandler) {
 	r.router.POST("/token/level", checkTokenLevel(handler)) // check token valid and send level user to another services
 	r.router.POST("/token", checkToken(handler))            // check token valid and send oid to another services
 	r.router.POST("/token/refresh", handler.refeshToken)    // refresh token
-
 }

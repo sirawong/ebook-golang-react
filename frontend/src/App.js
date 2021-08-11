@@ -51,7 +51,7 @@ function App() {
   return (
     <div>
       <Nav />
-      {!user && !retrievedUser ? <UnAuthApp /> : <AuthApp />}
+      {!retrievedUser ? <UnAuthApp /> : <AuthApp />}
     </div>
   );
 }

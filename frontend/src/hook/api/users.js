@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: '/user',
+  baseURL: 'http://localhost:8000',
 });
 
 export function signup(fname, lname, email, password) {
