@@ -11,7 +11,7 @@ import (
 
 func tokenAuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		req, err := http.NewRequest("POST", viper.GetString("auth.uri"), nil)
+		req, err := http.NewRequest("POST", viper.GetString("auth.uri_cart"), nil)
 		if err != nil {
 			logs.Error(err)
 			return
