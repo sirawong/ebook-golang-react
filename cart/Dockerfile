@@ -8,7 +8,7 @@ RUN go mod download
 
 COPY . ./
 
-RUN go build -o app
+RUN go build -o /app
 
 ##
 ## Deploy
@@ -21,5 +21,7 @@ WORKDIR /
 COPY --from=build /app /app
 
 EXPOSE 8000
+
+USER nonroot:nonroot
 
 ENTRYPOINT ["/app"]
