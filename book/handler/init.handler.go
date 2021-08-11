@@ -17,16 +17,6 @@ func NewRoutes() routes {
 }
 
 func (r routes) Cors() {
-<<<<<<< HEAD
-	r.router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"},
-		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"},
-		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
-	}))
-=======
 	r.router.Use(
 		cors.New(cors.Config{
 			AllowOrigins:     []string{"http://localhost:8080", "http://localhost:80", "http://localhost:3000", "http://localhost:3001"},
@@ -36,7 +26,6 @@ func (r routes) Cors() {
 			AllowCredentials: true,
 		}),
 	)
->>>>>>> deploy
 }
 
 func (r routes) Run(addr ...string) error {
