@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-EXPOSE 80 443
+EXPOSE 80
 
 # Set working directory
 WORKDIR /app
