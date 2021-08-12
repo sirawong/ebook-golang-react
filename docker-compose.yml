@@ -1,8 +1,7 @@
-version: "3.9"
+version: "3.8"
 services:
     nginx:
         image: siraphopdocker/ebook-nginx:latest
-        container_name: nginx
         restart: always
         depends_on:
             - frontend
@@ -10,26 +9,21 @@ services:
             - book
             - cart
         ports:
-            - 80:80
+            - "80:80"
 
-    frontend:
+    client:
         image: siraphopdocker/ebook-frontend:latest
-        container_name: client
         environment:
             - CHOKIDAR_USEPOLLING=true
 
     redis:
         image: redis:alpine
         command: redis-server --requirepass ${REDIS_PASSWORD}
-        container_name: redis
         volumes: 
             - ./redis-vol:/data
 
     user:
         image: siraphopdocker/ebook-user:latest
-        container_name: user
-        depends_on:
-            - redis
         environment:
             - APP_USER_PORT=${APP_USER_PORT}
             - DB_DB_URI=${DB_DB_URI}
@@ -43,9 +37,6 @@ services:
 
     books:
         image: siraphopdocker/ebook-book:latest
-        container_name: books
-        depends_on:
-            - user
         environment:
             - APP_BOOK_PORT=${APP_BOOK_PORT}
             - DB_DB_URI=${DB_DB_URI}
@@ -56,9 +47,6 @@ services:
 
     cart:
         image: siraphopdocker/ebook-cart:latest
-        container_name: cart
-        depends_on:
-            - user
         environment:
             - APP_CART_PORT=${APP_CART_PORT}
             - DB_DB_URI=${DB_DB_URI}
