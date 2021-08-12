@@ -7,7 +7,6 @@ on:
     types:
       - "closed"
 
-
 jobs:
   build_docker_images:
     name: Build docker images
@@ -36,60 +35,60 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
           logout: true
 
-      # - name: Build cart image
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: ./cart
-      #     file: ./cart/Dockerfile
-      #     builder: ${{ steps.buildx.outputs.name }}
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-cart:latest
-      #     cache-from: type=local,src=/tmp/.buildx-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-cache-new
+      - name: Build cart image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./cart
+          file: ./cart/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-cart:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
-      # - name: Build nginx image
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: ./nginx
-      #     file: ./nginx/Dockerfile
-      #     builder: ${{ steps.buildx.outputs.name }}
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-nginx:latest
-      #     cache-from: type=local,src=/tmp/.buildx-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-cache-new
+      - name: Build nginx image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nginx
+          file: ./nginx/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-nginx:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
-      # - name: Build client image
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: ./frontend
-      #     file: ./frontend/Dockerfile
-      #     builder: ${{ steps.buildx.outputs.name }}
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-frontend:latest
-      #     cache-from: type=local,src=/tmp/.buildx-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-cache-new
+      - name: Build client image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-frontend:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
-      # - name: Build user image
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: ./user
-      #     file: ./user/Dockerfile
-      #     builder: ${{ steps.buildx.outputs.name }}
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-user:latest
-      #     cache-from: type=local,src=/tmp/.buildx-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-cache-new
+      - name: Build user image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./user
+          file: ./user/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-user:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
-      # - name: Build book image
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: ./book
-      #     file: ./book/Dockerfile
-      #     builder: ${{ steps.buildx.outputs.name }}
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-book:latest
-      #     cache-from: type=local,src=/tmp/.buildx-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-cache-new
+      - name: Build book image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./book
+          file: ./book/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-book:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
       - name: Move cache
         run: |
