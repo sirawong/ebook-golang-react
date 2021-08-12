@@ -48,9 +48,9 @@ services:
         # ports:
         #     - 8000:8000
 
-    book:
+    books:
         image: siraphopdocker/ebook-book:latest
-        container_name: book
+        container_name: books
         environment:
             - APP_BOOK_PORT=${APP_BOOK_PORT}
             - DB_DB_URI=${DB_DB_URI}
