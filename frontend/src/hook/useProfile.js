@@ -14,7 +14,7 @@ export function useUpdate() {
   );
 }
 
-export function useUpload() {
+export function useProfileImage() {
   const dispatch = useDispatch();
 
   return useMutation('profile', (file) => uploadImage(file), {

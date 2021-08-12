@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: '/user',
+  baseURL: process.env.REACT_APP_USER_SERVICES || '/user',
 });
 
 export function signup(fname, lname, email, password) {
@@ -13,6 +13,7 @@ export function signup(fname, lname, email, password) {
       .then(async () => {
         await localStorage.setItem('c_user', email);
         resolve(email);
+        window.location.reload();
       })
       .catch((error) => {
         reject(error.response.data);
@@ -31,6 +32,7 @@ export function signin(email, password) {
         }
         await localStorage.setItem('image', response.data.image);
         resolve({ user: email, level: response.data.level });
+        window.location.reload();
       })
       .catch((error) => {
         reject(error.response.data);
@@ -64,6 +66,7 @@ export async function logout() {
         Cookies.remove('rf');
         Cookies.remove('ac');
         resolve();
+        window.location.reload();
       })
       .catch((error) => {
         reject(error.response.data);
@@ -79,7 +82,8 @@ export async function getProfile() {
   return new Promise((resolve, reject) => {
     instance
       .get('/me')
-      .then(async (response) => {
+      .then((response) => {
+        console.log(response)
         resolve(response.data);
       })
       .catch((error) => {
@@ -122,12 +126,11 @@ export async function uploadImage(files) {
   formData.append('image', files);
   await setTimeout(() => {}, 2000);
   return new Promise((resolve, reject) => {
-    axios
-      .post('/user/me/image', formData, {
+    instance
+      .post('/me/image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        withCredentials: true,
       })
       .then(async (response) => {
         await localStorage.setItem('image', response.data.image);

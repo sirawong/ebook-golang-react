@@ -32,7 +32,6 @@ type UserService interface {
 
 	GetLevelfromId(id primitive.ObjectID) (*string, error)
 	GetAllUsers(c *gin.Context) (*[]repository.User, error)
-	AdminNewUser(c *gin.Context) (*[]repository.User, error)
 	UpdateAdminService(c *gin.Context) (*repository.User, error)
 	DeleteAdminService(*gin.Context) error
 

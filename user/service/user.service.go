@@ -190,6 +190,12 @@ func (s userService) UpdateUserService(c *gin.Context) error {
 		return errs.NewNotAcceptableError("invalid json")
 	}
 
+	findUser, err := s.userRepo.GetById(*oid)
+	if err != nil {
+		logs.Error(err)
+		return errs.NewInternalServerError()
+	}
+
 	if user.Password != "" {
 		// hash password
 		hashpass, err := HashPassword(user.Password)
@@ -197,15 +203,16 @@ func (s userService) UpdateUserService(c *gin.Context) error {
 			logs.Error(err)
 			return errs.NewInternalServerError()
 		}
-		user.Password = hashpass
+		findUser.Password = hashpass
 	}
 
-	user.Level = "user"
-	user.ID = *oid
-	user.UpdatedAt = time.Now()
+	findUser.Name = user.Name
+	findUser.Lastname = user.Lastname
+	findUser.Email = user.Email
+	findUser.UpdatedAt = time.Now()
 
 	// update user in database
-	err = s.userRepo.UpdateUser(user)
+	err = s.userRepo.UpdateUser(*findUser)
 	if err != nil {
 		logs.Error(err)
 		return errs.NewInternalServerError()
@@ -238,11 +245,6 @@ func (s userService) GetAllUsers(c *gin.Context) (*[]repository.User, error) {
 
 	}
 	return users, nil
-}
-
-func (s userService) AdminNewUser(c *gin.Context) (*[]repository.User, error) {
-
-	return nil, nil
 }
 
 // update info user by admin

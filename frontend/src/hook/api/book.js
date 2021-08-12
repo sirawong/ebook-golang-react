@@ -5,7 +5,7 @@ import { fatchToken } from './users';
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: '/books',
+  baseURL: process.env.REACT_APP_BOOK_SERVICES || '/books',
 });
 
 export async function newBook(title, author, genres, description, characters, price, image) {

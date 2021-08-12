@@ -27,7 +27,7 @@ func main() {
 	router.Router(userHandler)
 
 	service.InitRedis()
-	port := viper.GetString("app.port")
+	port := viper.GetString("app.user_port")
 	logs.Info("Start service at port " + port)
 	err := router.Run(fmt.Sprintf(":%v", port))
 	if err != nil {

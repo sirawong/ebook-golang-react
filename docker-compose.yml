@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+    nginx:
+        image: siraphopdocker/ebook-nginx:latest
+        restart: always
+        depends_on:
+            - frontend
+            - backend
+        ports:
+            - "80:80"
+
+    frontend:
+        image: siraphopdocker/ebook-frontend:latest
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+
+    redis:
+        image: redis:alpine
+        command: redis-server --requirepass ${REDIS_PASSWORD}
+        container_name: redis
+        volumes: 
+            - ./redis-vol:/data
+
+    user:
+        image: siraphopdocker/ebook-user:latest
+        environment:
+            - APP_USER_PORT=${APP_USER_PORT}
+            - DB_DB_URI=${DB_DB_URI}
+            - DB_CLDNAME=${DB_CLDNAME}
+            - DB_CLDAPI=${DB_CLDAPI}
+            - DB_CLDSECRET=${DB_CLDSECRET}
+            - TOKEN_ACCESS_TOKEN=${TOKEN_ACCESS_TOKEN}
+            - TOKEN_REFRESH_TOKEN=${TOKEN_REFRESH_TOKEN}
+            - REDIS_DSN=${REDIS_DSN}
+            - REDIS_PASSWORD=${REDIS_PASSWORD}
+    book:
+        image: siraphopdocker/ebook-book:latest
+        environment:
+            - APP_BOOK_PORT=${APP_BOOK_PORT}
+            - DB_DB_URI=${DB_DB_URI}
+            - DB_CLDNAME=${DB_CLDNAME}
+            - DB_CLDAPI=${DB_CLDAPI}
+            - DB_CLDSECRET=${DB_CLDSECRET}
+            - AUTH_URI_BOOK=${AUTH_URI_BOOK}
+    cart:
+        image: siraphopdocker/ebook-cart:latest
+        environment:
+            - APP_CART_PORT=${APP_CART_PORT}
+            - DB_DB_URI=${DB_DB_URI}
+            - AUTH_URI_CART=${AUTH_URI_CART}

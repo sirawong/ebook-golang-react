@@ -1,12 +1,12 @@
-name: Deploy ebook shop
+name: Deploy ebook app to Elastic Beanstalk
 
 on:
   pull_request:
     branches:
-      - master
+      - main
     types:
       - "closed"
-      
+
 jobs:
   build_docker_images:
     name: Build docker images
@@ -35,18 +35,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
           logout: true
 
-      - name: Build cart image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./cart
-          file: ./cart/Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-cart:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
-          
-      - name: Build frontend image
+      - name: Build client image
         uses: docker/build-push-action@v2
         with:
           context: ./frontend
@@ -78,24 +67,33 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-book:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
-      
 
-      # - name: Build nginx image
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: ./nginx
-      #     file: ./nginx/Dockerfile
-      #     builder: ${{ steps.buildx.outputs.name }}
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-nginx:latest
-      #     cache-from: type=local,src=/tmp/.buildx-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-cache-new
+      - name: Build cart image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./cart
+          file: ./cart/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-cart:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+
+      - name: Build nginx image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nginx
+          file: ./nginx/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ebook-nginx:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
       - name: Get timestamp
         id: timestamp
         run: echo "::set-output name=timestamp::$(date +'%s')"
