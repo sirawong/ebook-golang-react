@@ -36,7 +36,7 @@ export default function useBookSearch(
     let cancel;
     axios({
       method: 'GET',
-      url: process.env.REACT_APP_BOOK_SERVICES || '/books',
+      url: process.env.REACT_APP_BOOK_SERVICES || '/books/',
       params: {
         page: pageNumber,
         query,
