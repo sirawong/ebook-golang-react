@@ -25,7 +25,7 @@ func main() {
 	router.Cors()
 	router.Router(cartHandler)
 
-	port := viper.GetString("app.port")
+	port := viper.GetString("app.cart_port")
 	logs.Info("Start service at port " + port)
 	err := router.Run(fmt.Sprintf(":%v", port))
 	if err != nil {

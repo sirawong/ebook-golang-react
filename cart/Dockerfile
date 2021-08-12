@@ -1,7 +1,7 @@
-FROM golang:buster AS build
+FROM golang:1.16-buster AS build
 
 WORKDIR /app
-# COPY vendor ./
+
 COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
@@ -20,7 +20,7 @@ WORKDIR /
 
 COPY --from=build /cart /cart
 
-EXPOSE 8000
+EXPOSE 8002
 
 USER nonroot:nonroot
 

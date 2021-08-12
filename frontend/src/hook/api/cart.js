@@ -3,13 +3,14 @@ import Cookies from 'js-cookie';
 
 import { fatchToken } from './users';
 
+const instance = axios.create({
+  withCredentials: true,
+  baseURL: process.env.REACT_APP_CART_SERVICES || '/cart',
+});
+
 export async function getCart() {
   return new Promise((resolve, reject) => {
-    axios({
-      method: 'GET',
-      url: `http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8002/order`,
-      withCredentials: true,
-    })
+    instance.get('/')
       .then((res) => {
         resolve(res.data);
       })
@@ -25,11 +26,8 @@ export async function setOrder({ cart, total, value }) {
   }
   await setTimeout(() => {}, 2000);
   return new Promise((resolve, reject) => {
-    axios
-      .post(
-        `http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8002/order`,
-        { items: cart, totalItem: total, valueTotal: value },
-        { withCredentials: true }
+    instance
+      .post('/',{items: cart, totalItem: total, valueTotal: value },
       )
       .then(async () => {
         resolve();

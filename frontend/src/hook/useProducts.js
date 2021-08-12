@@ -4,6 +4,7 @@ import { useMutation } from 'react-query';
 
 import { newBook, uploadBookImage, deleteBook, updateBook } from './api/book';
 
+
 export default function useBookSearch(
   query,
   pageNumber,
@@ -35,7 +36,7 @@ export default function useBookSearch(
     let cancel;
     axios({
       method: 'GET',
-      url: 'http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8001',
+      url: process.env.REACT_APP_BOOK_SERVICES || '/books',
       params: {
         page: pageNumber,
         query,
@@ -80,7 +81,7 @@ export function UseBook(bookid) {
     let cancel;
     axios({
       method: 'GET',
-      url: `http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8001/${bookid}`,
+      url: `${process.env.REACT_APP_BOOK_SERVICES}/${bookid}` || `/books/${bookid}`,
       withCredentials: true,
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })

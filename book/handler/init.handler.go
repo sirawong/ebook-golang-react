@@ -3,8 +3,6 @@ package handler
 import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-
-	"github.com/spf13/viper"
 )
 
 type routes struct {
@@ -21,7 +19,7 @@ func NewRoutes() routes {
 func (r routes) Cors() {
 	r.router.Use(
 		cors.New(cors.Config{
-			AllowOrigins:     []string{viper.GetString("esb.uri")},
+			AllowOrigins:     []string{"http://localhost:3001", "http://localhost:8080", "http://localhost:3000"},
 			AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
 			AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
 			ExposeHeaders:    []string{"Content-Length"},

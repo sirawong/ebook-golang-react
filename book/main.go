@@ -26,7 +26,7 @@ func main() {
 	router.Cors()
 	router.Router(bookHandler)
 
-	port := viper.GetString("app.port")
+	port := viper.GetString("app.book_port")
 	logs.Info("Start service at port " + port)
 	err := router.Run(fmt.Sprintf(":%v", port))
 	if err != nil {

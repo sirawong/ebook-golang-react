@@ -103,37 +103,37 @@ func (h userHandler) getAllUsers(c *gin.Context) {
 }
 
 // create user by admin
-func (h userHandler) createUserByAdmin(c *gin.Context) {
-	users, err := h.userSrv.AdminNewUser(c)
-	if err != nil {
-		handleError(c, err)
-		return
-	}
-	c.JSON(http.StatusOK, users)
-	return
-}
+// func (h userHandler) createUserByAdmin(c *gin.Context) {
+// 	users, err := h.userSrv.AdminNewUser(c)
+// 	if err != nil {
+// 		handleError(c, err)
+// 		return
+// 	}
+// 	c.JSON(http.StatusOK, users)
+// 	return
+// }
 
 // update user by admin
-func (h userHandler) updateAdminUser(c *gin.Context) {
-	user, err := h.userSrv.UpdateAdminService(c)
-	if err != nil {
-		handleError(c, err)
-		return
-	}
-	c.JSON(http.StatusOK, user)
-	return
-}
+// func (h userHandler) updateAdminUser(c *gin.Context) {
+// 	user, err := h.userSrv.UpdateAdminService(c)
+// 	if err != nil {
+// 		handleError(c, err)
+// 		return
+// 	}
+// 	c.JSON(http.StatusOK, user)
+// 	return
+// }
 
 // delete user by admin
-func (h userHandler) deleteAdminUser(c *gin.Context) {
-	err := h.userSrv.DeleteAdminService(c)
-	if err != nil {
-		handleError(c, err)
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{"message": "user deleted"})
-	return
-}
+// func (h userHandler) deleteAdminUser(c *gin.Context) {
+// 	err := h.userSrv.DeleteAdminService(c)
+// 	if err != nil {
+// 		handleError(c, err)
+// 		return
+// 	}
+// 	c.JSON(http.StatusOK, gin.H{"message": "user deleted"})
+// 	return
+// }
 
 // regenerate token by refresh token
 func (h userHandler) refeshToken(c *gin.Context) {

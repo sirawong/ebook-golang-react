@@ -3,21 +3,10 @@ import Cookies from 'js-cookie';
 
 import { fatchToken } from './users';
 
-export async function getBook(bookid) {
-  return new Promise((resolve, reject) => {
-    axios({
-      method: 'GET',
-      url: `http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8001/${bookid}`,
-      withCredentials: true,
-    })
-      .then((res) => {
-        resolve({ data: res.data });
-      })
-      .catch((error) => {
-        if (axios.isCancel(error)) reject(error.data);
-      });
-  });
-}
+const instance = axios.create({
+  withCredentials: true,
+  baseURL: process.env.REACT_APP_BOOK_SERVICES || '/books',
+});
 
 export async function newBook(title, author, genres, description, characters, price, image) {
   if (typeof Cookies.get('ac') === 'undefined') {
@@ -31,20 +20,15 @@ export async function newBook(title, author, genres, description, characters, pr
 
   await setTimeout(() => {}, 2000);
   return new Promise((resolve, reject) => {
-    axios
-      .post(
-        `http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8001/admin`,
+    instance
+      .post(`/admin`,
         { title, author, genres, description, characters, price },
-        { withCredentials: true }
       )
       .then(async (res) => {
         if (image.raw[0]) {
-          await axios
-            .post(`http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8001/admin/${res.data.id}/image`, formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-              withCredentials: true,
+          await instance
+            .post(`/admin/${res.data.id}/image`, formData, {
+              headers: {'Content-Type': 'multipart/form-data'}
             })
             .then(async () => {
               resolve();
@@ -68,11 +52,8 @@ export async function updateBook(bookid, title, author, genres, description, cha
 
   await setTimeout(() => {}, 2000);
   return new Promise((resolve, reject) => {
-    axios
-      .patch(
-        `http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8001/admin/${bookid}`,
+    instance.patch(`/admin/${bookid}`,
         { title, author, genres, description, characters, price },
-        { withCredentials: true }
       )
       .then(async (res) => {
         resolve(res.data);
@@ -90,8 +71,8 @@ export async function deleteBook(bookid) {
 
   await setTimeout(() => {}, 2000);
   return new Promise((resolve, reject) => {
-    axios
-      .delete(`http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8001/admin/${bookid}`, { withCredentials: true })
+    instance
+      .delete(`/admin/${bookid}`)
       .then(async () => {
         resolve();
       })
@@ -112,12 +93,11 @@ export async function uploadBookImage(file, bookid) {
   await setTimeout(() => {}, 2000);
 
   return new Promise((resolve, reject) => {
-    axios
-      .post(`http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8001/admin/${bookid}/image`, formData, {
+    instance
+      .post(`/admin/${bookid}/image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        withCredentials: true,
       })
       .then(async () => {
         resolve();
