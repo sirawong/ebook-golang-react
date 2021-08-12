@@ -1,12 +1,15 @@
 FROM nginx:alpine
 
-EXPOSE 80
+# Set working directory
+WORKDIR /app
 
-# Delete the default welcome to nginx page.
-RUN rm /usr/share/nginx/html/*
+# Copy over entrypoint
+COPY ./nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
 
-# Copy over the custom default configs.
-COPY default.conf /etc/nginx/conf.d/default.conf
+# Copy Nginx config template
+RUN rm /etc/nginx/conf.d/default.conf
+COPY ./default.conf /etc/nginx/conf.d/default.conf
 
-# Start nginx in the foreground to play nicely with Docker.
-CMD ["nginx", "-g", "daemon off;"]
+# Nginx init
+RUN ["chmod", "+x", "/usr/local/bin/nginx-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/nginx-entrypoint.sh"]
