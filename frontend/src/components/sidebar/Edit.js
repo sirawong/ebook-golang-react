@@ -27,7 +27,7 @@ export default function Edit({ props }) {
   const { mutateAsync: setUpdate, isLoading, isSuccess, isError, error } = useUpdateBook();
 
   const bookid = props.id;
-  const { book } = UseBook(bookid);
+  const { book, loading} = UseBook(bookid);
 
   const handleChange = (e) => {
     var binaryData = [];
@@ -71,7 +71,7 @@ export default function Edit({ props }) {
           Edit
         </button>
       </div>
-      {book.title && (
+      {book && !loading && (
         <Transition.Root show={open} as={Fragment}>
           <Dialog
             as="div"
