@@ -89,7 +89,6 @@ export async function uploadBookImage(file, bookid) {
 
   const formData = new FormData();
   formData.append('image', file);
-  console.log(file);
   await setTimeout(() => {}, 2000);
 
   return new Promise((resolve, reject) => {

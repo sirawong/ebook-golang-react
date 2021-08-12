@@ -5,7 +5,6 @@ import (
 	"auth/logs"
 	"auth/repository"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -411,13 +410,11 @@ func (s userService) Refresh(c *gin.Context) (*map[string]string, error) {
 		userId := fmt.Sprint(claims["user_id"])
 
 		//Delete the previous Refresh Token
-		log.Print(refreshUuid)
 		deleted, err := deleteSessionAuth(refreshUuid)
 		if err != nil || deleted == 0 { //if any goes wrong`
 			logs.Error(err)
 			return nil, errs.NewInternalServerError()
 		}
-		log.Print("test")
 		//Create new pairs of refresh and access tokens
 		newToken, createErr := createToken(userId)
 		if createErr != nil {
