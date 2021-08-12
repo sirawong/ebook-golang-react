@@ -71,7 +71,7 @@ export default function Edit({ props }) {
           Edit
         </button>
       </div>
-      {book && (
+      {book.title && (
         <Transition.Root show={open} as={Fragment}>
           <Dialog
             as="div"
