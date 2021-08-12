@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: 'http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8000',
+  baseURL: '/user',
 });
 
 export function signup(fname, lname, email, password) {
@@ -78,7 +78,7 @@ export async function getProfile() {
   await setTimeout(() => {}, 2000);
   return new Promise((resolve, reject) => {
     instance
-      .get('/user/me')
+      .get('/me')
       .then(async (response) => {
         resolve(response.data);
       })
@@ -123,7 +123,7 @@ export async function uploadImage(files) {
   await setTimeout(() => {}, 2000);
   return new Promise((resolve, reject) => {
     axios
-      .post('http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8000/me/image', formData, {
+      .post('/user/me/image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

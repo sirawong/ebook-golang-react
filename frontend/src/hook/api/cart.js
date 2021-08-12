@@ -7,7 +7,7 @@ export async function getCart() {
   return new Promise((resolve, reject) => {
     axios({
       method: 'GET',
-      url: `http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8002/order`,
+      url: `/cart/order`,
       withCredentials: true,
     })
       .then((res) => {
@@ -27,7 +27,7 @@ export async function setOrder({ cart, total, value }) {
   return new Promise((resolve, reject) => {
     axios
       .post(
-        `http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8002/order`,
+        `/cart/order`,
         { items: cart, totalItem: total, valueTotal: value },
         { withCredentials: true }
       )

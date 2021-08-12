@@ -35,7 +35,7 @@ export default function useBookSearch(
     let cancel;
     axios({
       method: 'GET',
-      url: 'http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8001',
+      url: '/books/',
       params: {
         page: pageNumber,
         query,
@@ -80,7 +80,7 @@ export function UseBook(bookid) {
     let cancel;
     axios({
       method: 'GET',
-      url: `http://ebook-env.eba-kzyatukw.ap-southeast-1.elasticbeanstalk.com:8001/${bookid}`,
+      url: `/books/${bookid}`,
       withCredentials: true,
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
