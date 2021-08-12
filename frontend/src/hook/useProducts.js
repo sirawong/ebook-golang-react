@@ -81,7 +81,7 @@ export function UseBook(bookid) {
     let cancel;
     axios({
       method: 'GET',
-      url: `${process.env.REACT_APP_BOOK_SERVICES}/${bookid}` || `/books/${bookid}`,
+      url: (process.env.REACT_APP_BOOK_SERVICES || `/books`) + `/${bookid}`,
       withCredentials: true,
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
