@@ -5,17 +5,21 @@ services:
         container_name: nginx
         restart: always
         depends_on:
-            [frontend, user, book, cart]
+            - frontend
+            - user
+            - book
+            - cart
         ports:
-            - "80:80"
+            - 80:80
+            - 443:443
 
     frontend:
         image: siraphopdocker/ebook-frontend:latest
         container_name: client
         environment:
             - CHOKIDAR_USEPOLLING=true
-        ports:
-            - 3000:3000
+        # ports:
+        #     - 3000:3000
 
     redis:
         image: redis:alpine
@@ -23,12 +27,14 @@ services:
         container_name: redis
         volumes: 
             - ./redis-vol:/data
-        ports:
-            - 6379:6379
+        # ports:
+        #     - 6379:6379
 
     user:
         image: siraphopdocker/ebook-user:latest
         container_name: user
+        depends_on:
+            - redis
         environment:
             - APP_USER_PORT=${APP_USER_PORT}
             - DB_DB_URI=${DB_DB_URI}
@@ -39,8 +45,9 @@ services:
             - TOKEN_REFRESH_TOKEN=${TOKEN_REFRESH_TOKEN}
             - REDIS_DSN=${REDIS_DSN}
             - REDIS_PASSWORD=${REDIS_PASSWORD}
-        ports:
-            - 8000:8000
+        # ports:
+        #     - 8000:8000
+
     book:
         image: siraphopdocker/ebook-book:latest
         container_name: book
@@ -51,8 +58,9 @@ services:
             - DB_CLDAPI=${DB_CLDAPI}
             - DB_CLDSECRET=${DB_CLDSECRET}
             - AUTH_URI_BOOK=${AUTH_URI_BOOK}
-        ports:
-            - 8001:8001
+        # ports:
+        #     - 8001:8001
+
     cart:
         image: siraphopdocker/ebook-cart:latest
         container_name: cart
@@ -60,5 +68,5 @@ services:
             - APP_CART_PORT=${APP_CART_PORT}
             - DB_DB_URI=${DB_DB_URI}
             - AUTH_URI_CART=${AUTH_URI_CART}
-        ports:
-            - 8002:8002
+        # ports:
+        #     - 8002:8002
