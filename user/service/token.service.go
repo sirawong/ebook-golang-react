@@ -20,10 +20,8 @@ var client *redis.Client
 func InitRedis() {
 	//Initializing redis
 	dsn := viper.GetString("redis.dsn")
-	password := viper.GetString("redis.password")
 	client = redis.NewClient(&redis.Options{
-		Addr:     dsn,
-		Password: password,
+		Addr: dsn,
 	})
 	_, err := client.Ping().Result()
 	if err != nil {

@@ -13,7 +13,6 @@ export function signup(fname, lname, email, password) {
       .then(async () => {
         await localStorage.setItem('c_user', email);
         resolve(email);
-        window.location.reload();
       })
       .catch((error) => {
         reject(error.response.data);
@@ -32,7 +31,6 @@ export function signin(email, password) {
         }
         await localStorage.setItem('image', response.data.image);
         resolve({ user: email, level: response.data.level });
-        window.location.reload();
       })
       .catch((error) => {
         reject(error.response.data);

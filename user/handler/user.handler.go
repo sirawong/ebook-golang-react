@@ -5,7 +5,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 )
+
+var domain = viper.GetString("domain.name")
 
 func NewUserHandler(userSrv service.UserService) userHandler {
 	return userHandler{userSrv: userSrv}
@@ -24,8 +27,8 @@ func (h userHandler) register(c *gin.Context) {
 	}
 
 	tk := *token
-	c.SetCookie("ac", tk["access_token"], 60*15, "/", "localhost", false, false)       // Maxage 15 minutes
-	c.SetCookie("rf", tk["refresh_token"], 60*60*24*7, "/", "localhost", false, false) // Maxage 7 days
+	c.SetCookie("ac", tk["access_token"], 60*15, "/", domain, false, false)       // Maxage 15 minutes
+	c.SetCookie("rf", tk["refresh_token"], 60*60*24*7, "/", domain, false, false) // Maxage 7 days
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Register successfully"})
 	return
@@ -40,8 +43,8 @@ func (h userHandler) login(c *gin.Context) {
 	}
 	tk := *token
 
-	c.SetCookie("ac", tk["access_token"], 60*15, "/", "localhost", false, false)       // Maxage 15 minutes
-	c.SetCookie("rf", tk["refresh_token"], 60*60*24*7, "/", "localhost", false, false) // Maxage 7 days
+	c.SetCookie("ac", tk["access_token"], 60*15, "/", domain, false, false)       // Maxage 15 minutes
+	c.SetCookie("rf", tk["refresh_token"], 60*60*24*7, "/", domain, false, false) // Maxage 7 days
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Login successfully", "level": tk["level"], "image": tk["image"]})
 	return
@@ -144,8 +147,8 @@ func (h userHandler) refeshToken(c *gin.Context) {
 	}
 
 	tk := *token
-	c.SetCookie("ac", tk["access_token"], 60*15, "/", "localhost", false, false)       // Maxage 15 minutes
-	c.SetCookie("rf", tk["refresh_token"], 60*60*24*7, "/", "localhost", false, false) // Maxage 7 days
+	c.SetCookie("ac", tk["access_token"], 60*15, "/", domain, false, false)       // Maxage 15 minutes
+	c.SetCookie("rf", tk["refresh_token"], 60*60*24*7, "/", domain, false, false) // Maxage 7 days
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Generate token successfully"})
 	return
