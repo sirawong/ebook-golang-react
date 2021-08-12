@@ -20,7 +20,7 @@ func NewRoutes() routes {
 
 func (r routes) Cors() {
 	r.router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3001", "http://localhost:8080", "http://localhost:3000"},
+		AllowOrigins:     []string{"http://localhost:3001", "http://localhost:8080", "http://localhost:3000", "http://localhost"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"},
 		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
