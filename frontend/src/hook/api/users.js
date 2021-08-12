@@ -83,7 +83,6 @@ export async function getProfile() {
     instance
       .get('/me')
       .then((response) => {
-        console.log(response)
         resolve(response.data);
       })
       .catch((error) => {
