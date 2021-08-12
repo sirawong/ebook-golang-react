@@ -17,8 +17,6 @@ services:
         container_name: client
         environment:
             - CHOKIDAR_USEPOLLING=true
-        # ports:
-        #     - 3000:3000
 
     redis:
         image: redis:alpine
@@ -26,8 +24,6 @@ services:
         container_name: redis
         volumes: 
             - ./redis-vol:/data
-        # ports:
-        #     - 6379:6379
 
     user:
         image: siraphopdocker/ebook-user:latest
@@ -44,12 +40,12 @@ services:
             - TOKEN_REFRESH_TOKEN=${TOKEN_REFRESH_TOKEN}
             - REDIS_DSN=${REDIS_DSN}
             - REDIS_PASSWORD=${REDIS_PASSWORD}
-        # ports:
-        #     - 8000:8000
 
     books:
         image: siraphopdocker/ebook-book:latest
         container_name: books
+        depends_on:
+            - user
         environment:
             - APP_BOOK_PORT=${APP_BOOK_PORT}
             - DB_DB_URI=${DB_DB_URI}
@@ -57,15 +53,13 @@ services:
             - DB_CLDAPI=${DB_CLDAPI}
             - DB_CLDSECRET=${DB_CLDSECRET}
             - AUTH_URI_BOOK=${AUTH_URI_BOOK}
-        # ports:
-        #     - 8001:8001
 
     cart:
         image: siraphopdocker/ebook-cart:latest
         container_name: cart
+        depends_on:
+            - user
         environment:
             - APP_CART_PORT=${APP_CART_PORT}
             - DB_DB_URI=${DB_DB_URI}
             - AUTH_URI_CART=${AUTH_URI_CART}
-        # ports:
-        #     - 8002:8002
