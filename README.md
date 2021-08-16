@@ -1,4 +1,4 @@
-# ebook-golang-react
+# Ebook-golang-react
 - Developed an E-book Shop web application using React and Go that allows user to search, filter, or add to cart and allow admin to perform CRUD operations Books service and JWT Authentication.
 - Designed RESTful API by using 3 services of Go: Users, Books, and Carts to communicate with client side and enabling data to be stored persistently on MongoDB Atlas through Nginx for api gateway.
   - Used Users service for authorized access resources by combining JWT authentication and Redis to implemented the concept of a refresh token to check whether the token is valid or invalid.
